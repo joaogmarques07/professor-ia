@@ -61,7 +61,7 @@ body {
 .logo-text {
   font-size: 15px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--accent);
   letter-spacing: -0.3px;
 }
 
@@ -332,11 +332,11 @@ body {
   margin-bottom: 16px;
 }
 .inicio-titulo {
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 700;
-  color: var(--text);
-  letter-spacing: -1px;
-  line-height: 1.15;
+  color: var(--accent);
+  letter-spacing: -1.5px;
+  line-height: 1.1;
   margin-bottom: 14px;
 }
 .inicio-sub {
@@ -384,7 +384,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.camada-titulo { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.camada-titulo { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 2px; }
 .camada-desc { font-size: 12px; color: var(--text-muted); }
 .tag-breve {
   font-size: 10px; font-weight: 600;
@@ -425,7 +425,7 @@ body {
   min-width: 110px;
 }
 .pe-icone { font-size: 16px; margin-bottom: 4px; }
-.pe-nome { font-size: 13px; font-weight: 600; color: var(--text); }
+.pe-nome { font-size: 13px; font-weight: 600; color: var(--accent); }
 .pe-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
 .pipeline-seta { font-size: 16px; color: var(--accent); font-weight: 700; flex-shrink: 0; }
 .pipeline-etapa-multi .pe-saidas {
@@ -505,7 +505,8 @@ body {
 .arquivo-item:hover { border-color: #383838; }
 .arquivo-tipo { font-size: 18px; flex-shrink: 0; width: 26px; text-align: center; padding-top: 2px; }
 .arquivo-info { flex: 1; min-width: 150px; }
-.arquivo-nome { font-size: 13.5px; font-weight: 500; }
+.arquivo-nome { font-size: 13.5px; font-weight: 500; color: var(--text); }
+.arquivo-item:hover .arquivo-nome { color: var(--accent); }
 .arquivo-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
 .arquivo-acoes {
   display: flex; gap: 5px; flex-shrink: 0;
