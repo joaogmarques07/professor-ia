@@ -8,41 +8,41 @@ Custo    : OpenAI TTS (~USD 0.015 / 1000 chars) + Claude (roteiro)
 
 import os
 import base64
-import anthropic
 from openai import OpenAI
+from skills.motor import chamar
 
-MODELO_ROTEIRO = "claude-sonnet-4-6"
 MODELO_TTS = "tts-1"
 VOZ = "nova"
 
+_SYSTEM_ROTEIRO = (
+    "Você é um professor experiente narrando slides de uma apresentação. "
+    "Fale de forma natural, direta e pedagógica. "
+    "Máximo 4 frases curtas por slide. Não mencione que é um slide."
+)
 
 # ─── Roteiro por slide ────────────────────────────────────────────────────────
 
-def _gerar_roteiro(slides: list[dict]) -> list[str]:
+def _gerar_roteiro(slides: list[dict]) -> tuple[list[str], int, int]:
     """
-    Para cada slide, gera uma narração curta (2-4 frases) usando Claude.
-    Retorna lista de textos na mesma ordem dos slides.
+    Para cada slide, gera uma narração curta (2-4 frases) via motor.
+    Retorna (roteiros, total_tokens_in, total_tokens_out).
     """
-    cliente = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-
     roteiros = []
+    total_in = total_out = 0
+
     for slide in slides:
         pontos = "\n".join(f"- {p}" for p in slide["pontos"])
         prompt = (
-            f"Você é um professor narrando um slide de apresentação.\n"
             f"Slide: {slide['titulo']}\n"
             f"Conteúdo:\n{pontos}\n\n"
-            "Escreva uma narração natural e didática com 2 a 4 frases curtas. "
-            "Não mencione que é um slide. Fale diretamente sobre o conteúdo."
+            "Escreva a narração deste slide."
         )
-        msg = cliente.messages.create(
-            model=MODELO_ROTEIRO,
-            max_tokens=256,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        roteiros.append(msg.content[0].text.strip())
+        texto, tk_in, tk_out = chamar(system=_SYSTEM_ROTEIRO, prompt=prompt, max_tokens=256)
+        roteiros.append(texto.strip())
+        total_in += tk_in
+        total_out += tk_out
 
-    return roteiros
+    return roteiros, total_in, total_out
 
 
 # ─── TTS por trecho ───────────────────────────────────────────────────────────
@@ -73,7 +73,7 @@ def _montar_html(titulo: str, slides: list[dict], audios_b64: list[str]) -> str:
             <div class="logo-mark">✦</div>
             <h1>{titulo}</h1>
             <div class="linha-acento"></div>
-            <p class="subtitulo">Professor.ia</p>
+            <p class="subtitulo">✦ Messi</p>
           </div>
         </section>"""
 
@@ -247,8 +247,8 @@ def do_resumo(resumo: str) -> tuple[bytes, str, float]:
     titulo = dados["titulo"]
     slides = dados["slides"]
 
-    # Gera roteiro por slide (Claude)
-    roteiros = _gerar_roteiro(slides)
+    # Gera roteiro por slide (Claude via motor)
+    roteiros, _, _ = _gerar_roteiro(slides)
 
     # Narra cada trecho (OpenAI TTS)
     total_chars = 0
