@@ -3,8 +3,8 @@ load_dotenv()
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from orquestrador.rotas import router
-from orquestrador.rotas_repositorio import router as router_repositorio
+from SrEdmundo.rotas import router
+from SrEdmundo.rotas_repositorio import router as router_repositorio
 from base_conhecimento import banco
 
 banco.inicializar()

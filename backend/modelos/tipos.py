@@ -5,9 +5,9 @@ from typing import Literal, Optional
 # Câmbio fixo — atualizar conforme necessário
 USD_BRL = 5.80
 
-# Preços Claude Opus 4.6 por milhão de tokens
-PRECO_INPUT_USD  = 15.0
-PRECO_OUTPUT_USD = 75.0
+# Preços Claude Sonnet 4.6 por milhão de tokens
+PRECO_INPUT_USD  = 3.0
+PRECO_OUTPUT_USD = 15.0
 
 
 class CustoSkill(BaseModel):
@@ -45,6 +45,18 @@ class Arquivo(BaseModel):
     tamanho_mb: float
     enviado_por: str = ""
     criado_em: str
+
+
+class RequisicaoQuiz(BaseModel):
+    conteudo: str
+    n_multipla: int = 5
+    n_abertas: int = 3
+    idioma: str = "português"
+
+
+class RespostaQuiz(BaseModel):
+    quiz: dict
+    custo: CustoSkill
 
 
 class RequisicaoResumo(BaseModel):

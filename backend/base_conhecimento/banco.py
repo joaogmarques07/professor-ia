@@ -152,6 +152,59 @@ def salvar_conteudo(arquivo_id: int, tipo: str, conteudo: str, custo_brl: float 
         return cur.lastrowid
 
 
+def deletar_arquivo(arquivo_id: int) -> bool:
+    registro = buscar_arquivo(arquivo_id)
+    if not registro:
+        return False
+    # Remove arquivo físico
+    if os.path.exists(registro["caminho"]):
+        os.remove(registro["caminho"])
+    # Remove áudios gerados
+    conteudos = listar_conteudo(arquivo_id)
+    for c in conteudos:
+        if c["tipo"] == "narracao" and os.path.exists(c["conteudo"]):
+            os.remove(c["conteudo"])
+    with conectar() as conn:
+        conn.execute("DELETE FROM conteudo_gerado WHERE arquivo_id = ?", (arquivo_id,))
+        conn.execute("DELETE FROM arquivos WHERE id = ?", (arquivo_id,))
+        conn.commit()
+    return True
+
+
+def substituir_arquivo(arquivo_id: int, nome_original: str, tipo: str, conteudo_bytes: bytes) -> bool:
+    registro = buscar_arquivo(arquivo_id)
+    if not registro:
+        return False
+    tamanho_mb = round(len(conteudo_bytes) / (1024 * 1024), 3)
+    # Sobrescreve o arquivo físico
+    with open(registro["caminho"], "wb") as f:
+        f.write(conteudo_bytes)
+    with conectar() as conn:
+        conn.execute(
+            "UPDATE arquivos SET nome_original=?, tipo=?, tamanho_mb=? WHERE id=?",
+            (nome_original, tipo, tamanho_mb, arquivo_id)
+        )
+        conn.commit()
+    return True
+
+
+def listar_arquivos_com_conteudo() -> list[dict]:
+    """Retorna arquivos que já têm pelo menos um conteúdo gerado, com área e tipos disponíveis."""
+    with conectar() as conn:
+        rows = conn.execute("""
+            SELECT a.id, a.nome_original, a.tipo, a.criado_em,
+                   ar.nome as area_nome,
+                   GROUP_CONCAT(DISTINCT cg.tipo) as tipos_gerados
+            FROM arquivos a
+            JOIN areas ar ON a.area_id = ar.id
+            JOIN conteudo_gerado cg ON cg.arquivo_id = a.id
+            GROUP BY a.id
+            ORDER BY a.criado_em DESC
+            LIMIT 20
+        """).fetchall()
+        return [dict(r) for r in rows]
+
+
 def listar_conteudo(arquivo_id: int) -> list[dict]:
     with conectar() as conn:
         rows = conn.execute(

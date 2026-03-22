@@ -9,134 +9,208 @@
 <body>
   <div class="layout">
 
+    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="logo">
         <span class="logo-icon">✦</span>
         <span class="logo-text">Professor.ia</span>
       </div>
+
       <nav class="nav">
-        <p class="nav-label">Sessão atual</p>
-        <div id="custo-sessao" class="custo-sessao">
-          <span class="custo-label">Custo total</span>
-          <span id="custo-total" class="custo-valor">R$ 0,0000</span>
-        </div>
-        <div id="custo-breakdown" class="custo-breakdown"></div>
+        <p class="nav-label">Menu</p>
+        <button class="nav-item active" data-page="repositorio">
+          <span class="nav-icon">🗂️</span> Repositório
+        </button>
+        <button class="nav-item" data-page="gerar">
+          <span class="nav-icon">⚡</span> Gerar avulso
+        </button>
       </nav>
+
+      <div class="custo-sessao">
+        <span class="custo-label">Custo da sessão</span>
+        <span id="custo-total" class="custo-valor">R$ 0,0000</span>
+        <div id="custo-breakdown" class="custo-breakdown"></div>
+      </div>
     </aside>
 
+    <!-- MAIN -->
     <main class="main">
 
-      <!-- ETAPA 1: Entrada -->
-      <section class="etapa" id="etapa-entrada">
-        <div class="etapa-header">
-          <div class="etapa-num">1</div>
-          <div>
-            <h2 class="etapa-titulo">Conteúdo</h2>
-            <p class="etapa-sub">Cole um texto ou suba um PDF</p>
+      <!-- ═══ PÁGINA: REPOSITÓRIO ════════════════════════════════════════ -->
+      <div id="page-repositorio" class="page">
+
+        <!-- Vista: lista de áreas -->
+        <div id="vista-areas">
+          <div class="page-header">
+            <div>
+              <h1 class="page-titulo">Repositório</h1>
+              <p class="page-sub">Conteúdo organizado por área</p>
+            </div>
+            <button class="btn-primary" id="btn-nova-area">+ Nova área</button>
+          </div>
+
+          <div id="form-nova-area" class="card form-inline hidden">
+            <h3 class="form-titulo">Nova área</h3>
+            <div class="form-row">
+              <input id="input-area-nome" class="input" type="text" placeholder="Nome da área (ex: Comercial)" />
+              <input id="input-area-desc" class="input" type="text" placeholder="Descrição (opcional)" />
+              <button id="btn-salvar-area" class="btn-primary">Salvar</button>
+              <button id="btn-cancelar-area" class="btn-secondary">Cancelar</button>
+            </div>
+          </div>
+
+          <div id="areas-grid" class="areas-grid">
+            <div class="empty-state">Nenhuma área criada ainda.</div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="tabs">
-            <button class="tab active" data-tab="texto">Texto</button>
-            <button class="tab" data-tab="pdf">PDF</button>
-          </div>
-
-          <div id="tab-texto" class="field">
-            <textarea id="conteudo" class="textarea" placeholder="Cole aqui o conteúdo — texto, artigo, documentação, transcrição..." rows="9"></textarea>
-          </div>
-
-          <div id="tab-pdf" class="field hidden">
-            <label class="upload-area" id="upload-area">
-              <span class="upload-icon">📎</span>
-              <span id="upload-label">Clique para selecionar ou arraste um PDF</span>
-              <input type="file" id="arquivo-pdf" accept=".pdf" hidden />
+        <!-- Vista: arquivos de uma área -->
+        <div id="vista-arquivos" class="hidden">
+          <div class="page-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <button id="btn-voltar-areas" class="btn-ghost">← Voltar</button>
+              <div>
+                <h1 class="page-titulo" id="titulo-area-atual"></h1>
+                <p class="page-sub" id="desc-area-atual"></p>
+              </div>
+            </div>
+            <label class="btn-primary" id="btn-subir-arquivo">
+              + Subir arquivo
+              <input type="file" id="input-arquivo-area" accept=".pdf,.docx,.pptx,.xlsx,.txt,.md,.csv,.html,.mp3,.wav,.m4a,.mp4" hidden />
             </label>
           </div>
-        </div>
-      </section>
 
-      <!-- CONECTOR -->
-      <div class="conector"><div class="conector-linha"></div></div>
-
-      <!-- ETAPA 2: Resumo -->
-      <section class="etapa" id="etapa-resumo">
-        <div class="etapa-header">
-          <div class="etapa-num">2</div>
-          <div>
-            <h2 class="etapa-titulo">Resumo</h2>
-            <p class="etapa-sub">Gerado pelo Claude Opus</p>
-          </div>
-          <div class="etapa-acoes">
-            <select id="nivel" class="select select-sm">
-              <option value="basico">Básico</option>
-              <option value="intermediario" selected>Intermediário</option>
-              <option value="avancado">Avançado</option>
-            </select>
-            <button id="btn-resumo" class="btn-primary">
-              <span id="btn-resumo-text">Gerar resumo</span>
-              <span id="btn-resumo-loader" class="loader hidden"></span>
-            </button>
+          <div id="arquivos-lista" class="arquivos-lista">
+            <div class="empty-state">Nenhum arquivo nesta área ainda.</div>
           </div>
         </div>
 
-        <div id="resultado-resumo" class="card resultado hidden">
-          <div class="resultado-header">
-            <span id="custo-resumo-badge" class="custo-badge"></span>
-            <button id="btn-copiar" class="btn-secondary">Copiar</button>
-          </div>
-          <div id="resultado-conteudo" class="resultado-conteudo"></div>
-        </div>
-      </section>
+      </div>
 
-      <!-- CONECTOR -->
-      <div class="conector"><div class="conector-linha"></div></div>
+      <!-- ═══ PÁGINA: GERAR AVULSO ═══════════════════════════════════════ -->
+      <div id="page-gerar" class="page hidden">
 
-      <!-- ETAPA 3: Saídas -->
-      <section class="etapa" id="etapa-saidas">
-        <div class="etapa-header">
-          <div class="etapa-num">3</div>
-          <div>
-            <h2 class="etapa-titulo">Gerar saídas</h2>
-            <p class="etapa-sub">A partir do resumo gerado</p>
+        <div id="selecao-rapida" class="selecao-rapida hidden">
+          <div class="selecao-header">
+            <span class="selecao-titulo">📂 Carregar do repositório</span>
+            <button id="btn-fechar-selecao" class="btn-ghost">✕</button>
           </div>
+          <div id="selecao-lista" class="selecao-lista"></div>
         </div>
 
-        <div class="saidas-grid">
-
-          <div class="saida-card" id="card-slides">
-            <div class="saida-icon">🎞️</div>
-            <div class="saida-info">
-              <h3 class="saida-titulo">Slides</h3>
-              <p class="saida-desc">Apresentação HTML com Reveal.js</p>
-              <span class="saida-custo">R$ 0,00 — sem chamada de IA</span>
+        <section class="etapa">
+          <div class="etapa-header">
+            <div class="etapa-num">1</div>
+            <div>
+              <h2 class="etapa-titulo">Conteúdo</h2>
+              <p class="etapa-sub">Cole um texto, suba um arquivo ou carregue do repositório</p>
             </div>
-            <button id="btn-slides" class="btn-secondary" disabled>
-              <span id="btn-slides-text">Gerar</span>
-              <span id="btn-slides-loader" class="loader hidden"></span>
-            </button>
-          </div>
-
-          <div class="saida-card saida-breve">
-            <div class="saida-icon">❓</div>
-            <div class="saida-info">
-              <h3 class="saida-titulo">Quiz</h3>
-              <p class="saida-desc">Perguntas e respostas sobre o conteúdo</p>
+            <div class="etapa-acoes">
+              <button id="btn-abrir-selecao" class="btn-secondary">📂 Do repositório</button>
             </div>
-            <span class="badge">em breve</span>
           </div>
 
-          <div class="saida-card saida-breve">
-            <div class="saida-icon">🎬</div>
-            <div class="saida-info">
-              <h3 class="saida-titulo">Vídeo narrado</h3>
-              <p class="saida-desc">Script + narração em áudio</p>
+          <div class="card">
+            <div class="tabs">
+              <button class="tab active" data-tab="texto">Texto</button>
+              <button class="tab" data-tab="arquivo">Arquivo</button>
             </div>
-            <span class="badge">em breve</span>
+            <div id="tab-texto" class="field">
+              <textarea id="conteudo" class="textarea" placeholder="Cole aqui o conteúdo..." rows="9"></textarea>
+            </div>
+            <div id="tab-arquivo" class="field hidden">
+              <label class="upload-area" id="upload-area">
+                <span class="upload-icon">📎</span>
+                <span id="upload-label">Clique para selecionar ou arraste um arquivo</span>
+                <span class="upload-hint">PDF, Word, PowerPoint, Excel, TXT, áudio, vídeo</span>
+                <input type="file" id="arquivo-input" accept=".pdf,.docx,.pptx,.xlsx,.txt,.md,.csv,.html,.mp3,.wav,.m4a,.mp4" hidden />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <div class="conector"><div class="conector-linha"></div></div>
+
+        <section class="etapa">
+          <div class="etapa-header">
+            <div class="etapa-num">2</div>
+            <div>
+              <h2 class="etapa-titulo">Resumo</h2>
+              <p class="etapa-sub">Gerado pelo Claude Sonnet 4.6</p>
+            </div>
+            <div class="etapa-acoes">
+              <select id="nivel" class="select select-sm">
+                <option value="basico">Básico</option>
+                <option value="intermediario" selected>Intermediário</option>
+                <option value="avancado">Avançado</option>
+              </select>
+              <button id="btn-resumo" class="btn-primary">
+                <span id="btn-resumo-text">Gerar resumo</span>
+                <span id="btn-resumo-loader" class="loader hidden"></span>
+              </button>
+            </div>
           </div>
 
-        </div>
-      </section>
+          <div id="resultado-resumo" class="card resultado hidden">
+            <div class="resultado-header">
+              <span id="custo-resumo-badge" class="custo-badge"></span>
+              <button id="btn-copiar" class="btn-secondary">Copiar</button>
+            </div>
+            <div id="resultado-conteudo" class="resultado-conteudo"></div>
+          </div>
+        </section>
+
+        <div class="conector"><div class="conector-linha"></div></div>
+
+        <section class="etapa">
+          <div class="etapa-header">
+            <div class="etapa-num">3</div>
+            <div>
+              <h2 class="etapa-titulo">Saídas</h2>
+              <p class="etapa-sub">A partir do resumo gerado</p>
+            </div>
+          </div>
+
+          <div class="saidas-grid">
+            <div class="saida-card">
+              <div class="saida-icon">🎞️</div>
+              <div class="saida-info">
+                <h3 class="saida-titulo">Slides</h3>
+                <p class="saida-desc">Apresentação HTML com Reveal.js</p>
+                <span class="saida-custo">R$ 0,00 — sem chamada de IA</span>
+              </div>
+              <button id="btn-slides" class="btn-secondary" disabled>
+                <span id="btn-slides-text">Gerar</span>
+                <span id="btn-slides-loader" class="loader hidden"></span>
+              </button>
+            </div>
+
+            <div class="saida-card">
+              <div class="saida-icon">❓</div>
+              <div class="saida-info">
+                <h3 class="saida-titulo">Quiz</h3>
+                <p class="saida-desc">Múltipla escolha + perguntas abertas</p>
+              </div>
+              <button id="btn-quiz" class="btn-secondary" disabled>
+                <span id="btn-quiz-text">Gerar</span>
+                <span id="btn-quiz-loader" class="loader hidden"></span>
+              </button>
+            </div>
+          </div>
+
+          <div id="resultado-quiz" class="card hidden" style="margin-top:16px;">
+            <div class="resultado-header">
+              <h3 style="font-size:15px;font-weight:600;">Quiz gerado</h3>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span id="custo-quiz-badge" class="custo-badge"></span>
+                <button id="btn-copiar-quiz" class="btn-secondary">Copiar</button>
+              </div>
+            </div>
+            <div id="resultado-quiz-conteudo"></div>
+          </div>
+        </section>
+
+      </div>
 
     </main>
   </div>
