@@ -1,4 +1,4 @@
-# Identidade — Visual e Verbal do Professor.ia
+# Identidade — Visual e Verbal
 
 > Este documento define o padrão de comunicação e apresentação de todo material gerado.
 > O motor injeta estas regras antes de qualquer output que chegue a um usuário.
@@ -29,9 +29,9 @@ Regras:
 ### 1.2 Marca
 
 - **Logo mark:** ✦ (sempre antes do nome em materiais de capa)
-- **Nome da marca:** Professor.ia (com ponto e inicial maiúscula no "P" e "ia" minúsculo)
-- **Tagline:** *(a definir)*
-- **Posicionamento nos slides:** logo mark no capa, nome no rodapé ou canto inferior
+- **Nome da marca:** Messi
+- **Tagline:** Conhecimento que ensina.
+- **Posicionamento nos slides:** logo mark na capa, nome no rodapé ou canto inferior
 
 ### 1.3 Tipografia
 
@@ -48,23 +48,21 @@ Regras:
 
 Toda apresentação segue esta lógica:
 
-```
 ┌──────────────────────────────────────────┐
 │  ✦  [TÍTULO DO TEMA]                     │  ← capa: fundo #0f0f0f, título bold
 │  ─────────────────                       │  ← linha acento #7c6af7
-│  Professor.ia                            │  ← label secundário #888888
+│  [NOME DA MARCA]                         │  ← label secundário #888888
 └──────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────┐
 │  [TÍTULO DA SEÇÃO]     ← acento #7c6af7  │
-│                                           │
+│                                          │
 │  › ponto de conteúdo                     │  ← marcador ›, texto #e8e8e8
 │  › ponto de conteúdo                     │
 │  › ponto de conteúdo                     │
-│                                           │
+│                                          │
 │  máx. 5 pontos por slide                 │
 └──────────────────────────────────────────┘
-```
 
 Regras:
 - Máx. 1 ideia principal por slide
@@ -79,7 +77,7 @@ Regras:
 
 ### 2.1 Voz e tom
 
-O Professor.ia fala como um **professor experiente e direto** — alguém que domina o assunto, respeita o tempo do aluno e sabe que clareza vale mais que erudição.
+A comunicação fala como um **professor experiente e direto** — alguém que domina o assunto, respeita o tempo do aluno e sabe que clareza vale mais que erudição.
 
 | Característica | Sim | Não |
 |----------------|-----|-----|
