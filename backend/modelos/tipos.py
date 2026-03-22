@@ -25,6 +25,28 @@ class CustoSkill(BaseModel):
         )
 
 
+class Area(BaseModel):
+    id: int
+    nome: str
+    descricao: str = ""
+    criado_em: str
+
+
+class RequisicaoArea(BaseModel):
+    nome: str
+    descricao: str = ""
+
+
+class Arquivo(BaseModel):
+    id: int
+    area_id: int
+    nome_original: str
+    tipo: str
+    tamanho_mb: float
+    enviado_por: str = ""
+    criado_em: str
+
+
 class RequisicaoResumo(BaseModel):
     conteudo: str
     nivel: Literal["basico", "intermediario", "avancado"] = "intermediario"

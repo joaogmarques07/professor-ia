@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from fastapi.responses import Response
 from modelos.tipos import RequisicaoResumo, RespostaResumo, CustoSkill
 from skills.processamento import skill_resumo
-from skills.entrada import skill_pdf
+from skills.entrada import SK_HarryPotter
 from skills.saida import skill_slides
 from base_conhecimento import banco
 
@@ -36,7 +36,7 @@ async def criar_resumo_pdf(
         raise HTTPException(status_code=400, detail="Apenas arquivos PDF são aceitos.")
     try:
         conteudo_bytes = await arquivo.read()
-        conteudo = skill_pdf.extrair_texto(conteudo_bytes)
+        conteudo = SK_HarryPotter.extrair_texto(conteudo_bytes)
         if not conteudo.strip():
             raise HTTPException(status_code=400, detail="Não foi possível extrair texto do PDF.")
         texto, tk_in, tk_out = skill_resumo.gerar(conteudo, nivel, idioma)
