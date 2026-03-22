@@ -16,13 +16,16 @@
     <aside class="sidebar">
       <div class="logo">
         <span class="logo-icon">✦</span>
-        <span class="logo-text">Professor<span>.</span>ia</span>
+        <span class="logo-text">Professor.ia</span>
       </div>
 
       <nav class="nav">
-        <p class="nav-label">Menu</p>
-        <button class="nav-item active" data-page="repositorio">
-          <span class="nav-icon">🗂️</span> Repositório
+        <p class="nav-label">Plataforma</p>
+        <button class="nav-item active" data-page="inicio">
+          <span class="nav-icon">⌂</span> Início
+        </button>
+        <button class="nav-item" data-page="repositorio">
+          <span class="nav-icon">🗂</span> Repositório
         </button>
         <button class="nav-item" data-page="gerar">
           <span class="nav-icon">⚡</span> Gerar avulso
@@ -30,8 +33,8 @@
       </nav>
 
       <div class="custo-sessao">
-        <span class="custo-label">Custo da sessão</span>
-        <span id="custo-total" class="custo-valor">R$ 0,0000</span>
+        <div class="custo-label">Custo da sessão</div>
+        <div id="custo-total" class="custo-valor">R$ 0,0000</div>
         <div id="custo-breakdown" class="custo-breakdown"></div>
       </div>
     </aside>
@@ -39,8 +42,92 @@
     <!-- MAIN -->
     <main class="main">
 
-      <!-- ═══ PÁGINA: REPOSITÓRIO ════════════════════════════════════════ -->
-      <div id="page-repositorio" class="page">
+      <!-- ═══ PÁGINA: INÍCIO ══════════════════════════════════════════════ -->
+      <div id="page-inicio" class="page">
+
+        <div class="inicio-hero">
+          <div class="inicio-marca">✦ Professor.ia</div>
+          <h1 class="inicio-titulo">Conhecimento que ensina.</h1>
+          <p class="inicio-sub">
+            Qualquer arquivo vira material educacional completo — automaticamente.<br>
+            Repositório centralizado, IA pedagógica, múltiplos formatos de saída.
+          </p>
+          <div class="inicio-acoes">
+            <button class="btn-primary" data-page="repositorio">Abrir Repositório</button>
+            <button class="btn-secondary" data-page="gerar">Gerar avulso</button>
+          </div>
+        </div>
+
+        <div class="inicio-camadas">
+          <div class="camada-item">
+            <div class="camada-num">1</div>
+            <div class="camada-info">
+              <div class="camada-titulo">Repositório</div>
+              <div class="camada-desc">Centraliza arquivos por área. O original é sempre preservado.</div>
+            </div>
+          </div>
+          <div class="camada-seta">↓</div>
+          <div class="camada-item">
+            <div class="camada-num">2</div>
+            <div class="camada-info">
+              <div class="camada-titulo">Gerador</div>
+              <div class="camada-desc">IA aprende com o conteúdo e gera material pedagógico.</div>
+            </div>
+          </div>
+          <div class="camada-seta">↓</div>
+          <div class="camada-item">
+            <div class="camada-num">3</div>
+            <div class="camada-info">
+              <div class="camada-titulo">Plataforma</div>
+              <div class="camada-desc">Conteúdo organizado em trilhas de formação. <span class="tag-breve">em breve</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inicio-pipeline">
+          <div class="pipeline-titulo">Pipeline de geração</div>
+          <div class="pipeline-etapas">
+            <div class="pipeline-etapa">
+              <div class="pe-icone">📥</div>
+              <div class="pe-nome">Extrair</div>
+              <div class="pe-desc">PDF, DOCX, PPTX, áudio, vídeo…</div>
+            </div>
+            <div class="pipeline-seta">›</div>
+            <div class="pipeline-etapa">
+              <div class="pe-icone">🧠</div>
+              <div class="pe-nome">Aprender</div>
+              <div class="pe-desc">Tema, conceitos, público, nível</div>
+            </div>
+            <div class="pipeline-seta">›</div>
+            <div class="pipeline-etapa">
+              <div class="pe-icone">🎯</div>
+              <div class="pe-nome">Elaborar</div>
+              <div class="pe-desc">Plano didático e sequência de ensino</div>
+            </div>
+            <div class="pipeline-seta">›</div>
+            <div class="pipeline-etapa pipeline-etapa-multi">
+              <div class="pe-icone">📤</div>
+              <div class="pe-nome">Gerar</div>
+              <div class="pe-saidas">
+                <span>Resumo</span><span>Quiz</span><span>Glossário</span>
+                <span>Exercícios</span><span>Slides</span><span>Narração</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inicio-areas" id="inicio-areas-wrap">
+          <div class="inicio-section-titulo">Áreas recentes</div>
+          <div id="inicio-areas-grid" class="areas-grid">
+            <div class="empty-state" style="padding:20px 0">Nenhuma área criada ainda.</div>
+          </div>
+          <button class="btn-ghost" style="margin-top:8px" data-page="repositorio">Ver todas →</button>
+        </div>
+
+      </div>
+
+      <!-- ═══ PÁGINA: REPOSITÓRIO ═════════════════════════════════════════ -->
+      <div id="page-repositorio" class="page hidden">
 
         <!-- Vista: lista de áreas -->
         <div id="vista-areas">
@@ -53,7 +140,7 @@
           </div>
 
           <div id="form-nova-area" class="card form-inline hidden">
-            <h3 class="form-titulo">Nova área</h3>
+            <div class="form-titulo">Nova área</div>
             <div class="form-row">
               <input id="input-area-nome" class="input" type="text" placeholder="Nome da área (ex: Comercial)" />
               <input id="input-area-desc" class="input" type="text" placeholder="Descrição (opcional)" />
@@ -90,7 +177,7 @@
 
       </div>
 
-      <!-- ═══ PÁGINA: GERAR AVULSO ═══════════════════════════════════════ -->
+      <!-- ═══ PÁGINA: GERAR AVULSO ════════════════════════════════════════ -->
       <div id="page-gerar" class="page hidden">
 
         <div id="selecao-rapida" class="selecao-rapida hidden">
@@ -178,9 +265,9 @@
             <div class="saida-card">
               <div class="saida-icon">🎞️</div>
               <div class="saida-info">
-                <h3 class="saida-titulo">Slides</h3>
-                <p class="saida-desc">Apresentação HTML com Reveal.js</p>
-                <span class="saida-custo">R$ 0,00 — sem chamada de IA</span>
+                <div class="saida-titulo">Slides</div>
+                <div class="saida-desc">Apresentação HTML com Reveal.js</div>
+                <div class="saida-custo">sem custo de IA</div>
               </div>
               <button id="btn-slides" class="btn-secondary" disabled>
                 <span id="btn-slides-text">Gerar</span>
@@ -191,8 +278,8 @@
             <div class="saida-card">
               <div class="saida-icon">❓</div>
               <div class="saida-info">
-                <h3 class="saida-titulo">Quiz</h3>
-                <p class="saida-desc">Múltipla escolha + perguntas abertas</p>
+                <div class="saida-titulo">Quiz</div>
+                <div class="saida-desc">Múltipla escolha + perguntas abertas</div>
               </div>
               <button id="btn-quiz" class="btn-secondary" disabled>
                 <span id="btn-quiz-text">Gerar</span>
@@ -201,10 +288,10 @@
             </div>
           </div>
 
-          <div id="resultado-quiz" class="card hidden" style="margin-top:16px;">
+          <div id="resultado-quiz" class="card hidden" style="margin-top:14px;">
             <div class="resultado-header">
-              <h3 style="font-size:15px;font-weight:600;">Quiz gerado</h3>
-              <div style="display:flex;gap:10px;align-items:center;">
+              <span style="font-size:14px;font-weight:700;color:var(--accent)">Quiz</span>
+              <div style="display:flex;gap:8px;align-items:center;">
                 <span id="custo-quiz-badge" class="custo-badge"></span>
                 <button id="btn-copiar-quiz" class="btn-secondary">Copiar</button>
               </div>

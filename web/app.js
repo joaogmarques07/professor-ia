@@ -6,19 +6,49 @@ let custoTotal = 0;
 let areaAtual = null;
 
 // ── Navegação entre páginas ──────────────────────────────────────────────────
+function navegarPara(pagina) {
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+  const navBtn = document.querySelector(`.nav-item[data-page="${pagina}"]`);
+  if (navBtn) navBtn.classList.add("active");
+  document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+  document.getElementById(`page-${pagina}`).classList.remove("hidden");
+  if (pagina === "repositorio") carregarAreas();
+  if (pagina === "inicio") carregarAreasInicio();
+}
+
 document.querySelectorAll(".nav-item").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    const pagina = btn.dataset.page;
-    document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
-    document.getElementById(`page-${pagina}`).classList.remove("hidden");
-    if (pagina === "repositorio") carregarAreas();
-  });
+  btn.addEventListener("click", () => navegarPara(btn.dataset.page));
 });
 
-// Carrega repositório na inicialização
-carregarAreas();
+// Botões de navegação na página Início
+document.querySelectorAll("[data-page]").forEach(btn => {
+  if (!btn.classList.contains("nav-item")) {
+    btn.addEventListener("click", () => navegarPara(btn.dataset.page));
+  }
+});
+
+// Carrega áreas no início
+carregarAreasInicio();
+
+async function carregarAreasInicio() {
+  try {
+    const res = await fetch(`${API}/repositorio/areas`);
+    const areas = await res.json();
+    const grid = document.getElementById("inicio-areas-grid");
+    if (!areas.length) {
+      grid.innerHTML = '<div class="empty-state" style="padding:20px 0">Nenhuma área criada ainda.<br><button class="btn-primary" style="margin-top:12px" onclick="navegarPara(\'repositorio\')">Criar primeira área</button></div>';
+      return;
+    }
+    const icones = { pdf: "📄", docx: "📝", pptx: "📊", xlsx: "📗", txt: "📃" };
+    grid.innerHTML = areas.slice(0, 6).map(a => `
+      <div class="area-card" onclick="navegarPara('repositorio')" style="cursor:pointer">
+        <div class="area-card-icon">🗂️</div>
+        <div class="area-card-nome">${a.nome}</div>
+        ${a.descricao ? `<div class="area-card-desc">${a.descricao}</div>` : ""}
+      </div>
+    `).join("");
+  } catch {}
+}
 
 // ── Seleção rápida do repositório ────────────────────────────────────────────
 document.getElementById("btn-abrir-selecao").addEventListener("click", async () => {
