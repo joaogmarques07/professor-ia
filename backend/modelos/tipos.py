@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Literal, Optional
+from dataclasses import dataclass, field
 
 
 # Câmbio fixo — atualizar conforme necessário
@@ -57,4 +58,40 @@ class RespostaResumo(BaseModel):
     resumo_id: int
     resumo: str
     nivel: str
+    custo: CustoSkill
+
+
+# ─── Pipeline ─────────────────────────────────────────────────────────────────
+
+@dataclass
+class ContextoPipeline:
+    """
+    Estado compartilhado que flui entre os passos do pipeline.
+    Cada skill recebe, preenche seu campo em `resultados` e devolve.
+    """
+    arquivo_id: int
+    nome_arquivo: str
+    bytes_arquivo: bytes
+    area_id: int
+
+    texto_bruto: str = ""
+    resultados: dict = field(default_factory=dict)  # {"resumo": "...", "slides": "<html>..."}
+
+    tokens_entrada: int = 0
+    tokens_saida: int = 0
+
+    @property
+    def custo_brl(self) -> float:
+        return CustoSkill.calcular(self.tokens_entrada, self.tokens_saida).custo_brl
+
+    def acumular_tokens(self, tk_in: int, tk_out: int) -> None:
+        self.tokens_entrada += tk_in
+        self.tokens_saida += tk_out
+
+
+class RespostaPipeline(BaseModel):
+    arquivo_id: int
+    area_id: int
+    skills_executadas: list[str]
+    resultados: dict[str, str]
     custo: CustoSkill
