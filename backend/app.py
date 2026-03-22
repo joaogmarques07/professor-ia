@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from SrEdmundo.rotas import router
 from SrEdmundo.rotas_repositorio import router as router_repositorio
+from SrEdmundo.rotas_pipeline import router as router_pipeline
 from base_conhecimento import banco
 
 banco.inicializar()
@@ -20,6 +21,7 @@ app.add_middleware(
 
 app.include_router(router)
 app.include_router(router_repositorio)
+app.include_router(router_pipeline)
 
 
 @app.get("/health")
