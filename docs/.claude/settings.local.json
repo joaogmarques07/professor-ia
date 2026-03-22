@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/joaog/Professor.ia/backend/**)",
+      "Read(//c/Users/joaog/Professor.ia/web//**)",
+      "Read(//c/Users/joaog/Professor.ia/**)",
+      "Bash(.venv/Scripts/python validacao/test_knowledge_base.py)",
+      "Bash(.venv/Scripts/python -c \"from contexto.professor import ProfessorAgent; print\\(''OK - ProfessorAgent importado com sucesso''\\)\")",
+      "Bash(.venv/Scripts/python -c \":*)",
+      "Bash(.venv/Scripts/python main.py --help)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\joaog\\Professor.ia\\backend",
+      "c:\\Users\\joaog\\Professor.ia"
+    ]
+  }
+}

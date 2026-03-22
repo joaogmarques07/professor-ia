@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Dados e banco
+backend/data/*.db
+backend/outputs/
+
+# Segredos
+backend/.env
+
+# OS
+.DS_Store
+Thumbs.db

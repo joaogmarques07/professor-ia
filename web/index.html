@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professor.ia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Professor.ia</span>
+      </div>
+      <nav class="nav">
+        <p class="nav-label">Sessão atual</p>
+        <div id="custo-sessao" class="custo-sessao">
+          <span class="custo-label">Custo total</span>
+          <span id="custo-total" class="custo-valor">R$ 0,0000</span>
+        </div>
+        <div id="custo-breakdown" class="custo-breakdown"></div>
+      </nav>
+    </aside>
+
+    <main class="main">
+
+      <!-- ETAPA 1: Entrada -->
+      <section class="etapa" id="etapa-entrada">
+        <div class="etapa-header">
+          <div class="etapa-num">1</div>
+          <div>
+            <h2 class="etapa-titulo">Conteúdo</h2>
+            <p class="etapa-sub">Cole um texto ou suba um PDF</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tabs">
+            <button class="tab active" data-tab="texto">Texto</button>
+            <button class="tab" data-tab="pdf">PDF</button>
+          </div>
+
+          <div id="tab-texto" class="field">
+            <textarea id="conteudo" class="textarea" placeholder="Cole aqui o conteúdo — texto, artigo, documentação, transcrição..." rows="9"></textarea>
+          </div>
+
+          <div id="tab-pdf" class="field hidden">
+            <label class="upload-area" id="upload-area">
+              <span class="upload-icon">📎</span>
+              <span id="upload-label">Clique para selecionar ou arraste um PDF</span>
+              <input type="file" id="arquivo-pdf" accept=".pdf" hidden />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONECTOR -->
+      <div class="conector"><div class="conector-linha"></div></div>
+
+      <!-- ETAPA 2: Resumo -->
+      <section class="etapa" id="etapa-resumo">
+        <div class="etapa-header">
+          <div class="etapa-num">2</div>
+          <div>
+            <h2 class="etapa-titulo">Resumo</h2>
+            <p class="etapa-sub">Gerado pelo Claude Opus</p>
+          </div>
+          <div class="etapa-acoes">
+            <select id="nivel" class="select select-sm">
+              <option value="basico">Básico</option>
+              <option value="intermediario" selected>Intermediário</option>
+              <option value="avancado">Avançado</option>
+            </select>
+            <button id="btn-resumo" class="btn-primary">
+              <span id="btn-resumo-text">Gerar resumo</span>
+              <span id="btn-resumo-loader" class="loader hidden"></span>
+            </button>
+          </div>
+        </div>
+
+        <div id="resultado-resumo" class="card resultado hidden">
+          <div class="resultado-header">
+            <span id="custo-resumo-badge" class="custo-badge"></span>
+            <button id="btn-copiar" class="btn-secondary">Copiar</button>
+          </div>
+          <div id="resultado-conteudo" class="resultado-conteudo"></div>
+        </div>
+      </section>
+
+      <!-- CONECTOR -->
+      <div class="conector"><div class="conector-linha"></div></div>
+
+      <!-- ETAPA 3: Saídas -->
+      <section class="etapa" id="etapa-saidas">
+        <div class="etapa-header">
+          <div class="etapa-num">3</div>
+          <div>
+            <h2 class="etapa-titulo">Gerar saídas</h2>
+            <p class="etapa-sub">A partir do resumo gerado</p>
+          </div>
+        </div>
+
+        <div class="saidas-grid">
+
+          <div class="saida-card" id="card-slides">
+            <div class="saida-icon">🎞️</div>
+            <div class="saida-info">
+              <h3 class="saida-titulo">Slides</h3>
+              <p class="saida-desc">Apresentação HTML com Reveal.js</p>
+              <span class="saida-custo">R$ 0,00 — sem chamada de IA</span>
+            </div>
+            <button id="btn-slides" class="btn-secondary" disabled>
+              <span id="btn-slides-text">Gerar</span>
+              <span id="btn-slides-loader" class="loader hidden"></span>
+            </button>
+          </div>
+
+          <div class="saida-card saida-breve">
+            <div class="saida-icon">❓</div>
+            <div class="saida-info">
+              <h3 class="saida-titulo">Quiz</h3>
+              <p class="saida-desc">Perguntas e respostas sobre o conteúdo</p>
+            </div>
+            <span class="badge">em breve</span>
+          </div>
+
+          <div class="saida-card saida-breve">
+            <div class="saida-icon">🎬</div>
+            <div class="saida-info">
+              <h3 class="saida-titulo">Vídeo narrado</h3>
+              <p class="saida-desc">Script + narração em áudio</p>
+            </div>
+            <span class="badge">em breve</span>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
